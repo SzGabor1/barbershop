@@ -1,5 +1,5 @@
 import React from 'react';
-import SubmitButton from './uiElements/submitButton';
+import SubmitButton from './submitButton';
 
 interface FormProps {
     title: string;
@@ -47,6 +47,7 @@ const FormContainer: React.FC<FormProps> = ({ title, fields, onSubmit}) => {
                                 className="text-center my-2 border-2 border-gray-300 rounded-md p-1 m-1 w-48"
                                 type={fieldName === 'password' ? 'password' : 'text'}
                                 name={fieldName}
+                                autoComplete='on'
                                 value={formData[fieldName] || ''}
                                 onChange={handleChange}
                                 required
