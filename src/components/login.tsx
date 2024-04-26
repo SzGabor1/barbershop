@@ -1,16 +1,15 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
+import { useNavigate } from 'react-router-dom'; 
 import FormContainer from './uiElements/formcontainer';
+
 const Login: React.FC = () => {
-    const navigate = useNavigate(); // Initialize navigate using useNavigate hook
+    const navigate = useNavigate();
+    const token = localStorage.getItem('access_token');
     useEffect(() => {
-        const token = localStorage.getItem('access_token');
-           
-    
         if (token) 
-            navigate('/');
-    }, []); // Use navigate to navigate to the desired route after successful login
+             navigate('/');
+    }, []); 
 
     const handleLogin = (data: { [key: string]: string }) => {
         const { username, password } = data;
@@ -23,7 +22,7 @@ const Login: React.FC = () => {
                 localStorage.setItem('refresh_token', response.data.refresh);
 
 
-                navigate("/"); // Use navigate to navigate to the desired route after successful login
+                navigate("/");
             }).catch((error) => {
                 console.log(error);
             });
@@ -31,7 +30,7 @@ const Login: React.FC = () => {
     };
 
     return (
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex justify-center items-center m-20">
             <FormContainer
                 title="Login"
                 fields={['username', 'password']}

@@ -83,6 +83,8 @@ const Appointments: React.FC = () => {
     selectedDate.setDate(selectedDate.getDate() + 1);
     const end_date = selectedDate.toISOString();
 
+    console.log('Selected date:', start_date, end_date);
+
     axios.get('http://localhost:8000/api/timeslots/range/', {
       params: {
         'start_date': start_date,
@@ -111,39 +113,73 @@ const Appointments: React.FC = () => {
   };
 
   return (
-    <div>
-      <SelectEmployee
-        employees={employees}
-        onSelectEmployee={handleEmployeeSelect}
-      />
-      <h1>{selectedEmployeeId}</h1>
+    <div className='m-5'>
+      {selectedEmployeeId ? (
+        <>
+          <div className="text-center mt-4">
+            <button onClick={() => setSelectedEmployeeId(null)} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+              Change Employee
+            </button>
+          </div>
+          <h1>{selectedEmployeeId}</h1>
+        </>
+      ) : (
+        <SelectEmployee
+          employees={employees}
+          onSelectEmployee={handleEmployeeSelect}
+        />
+      )}
       
       {selectedEmployeeId && (
-  <SelectService
-    services={services}
-    onSelectService={handleServiceSelect}
-  />
-)}
-
-      <h1>{selectedService?.pk}</h1>
+        <>
+          <SelectService
+            services={services}
+            onSelectService={handleServiceSelect}
+          />
+          <h1>{selectedService?.pk}</h1>
+        </>
+      )}
+  
       {selectedEmployeeId && selectedService && (
         <>
-        <div className='time-selection-wrapper'>
-
-          <h2 className='time-selection-title text-xl text-center'>Pick a day</h2>
-          <WeekViewDatePicker onSelectDate={handleDateSelect} />
-          {/* Map over timeslots and render */}
-          {timeslots.map((timeslot) => (
-            <div key={timeslot.pk}>
-              <button onClick={() => handleBookAppointment(timeslot)}>Start Time: {formatTime(timeslot.start_date)}</button>
-              {/* <p>End Time: {timeslot.end_date}</p> */}
-            </div>
-          ))}
+          <div className='time-selection-wrapper'>
+            <h2 className='time-selection-title text-xl text-center'>Pick a day</h2>
+            <WeekViewDatePicker onSelectDate={handleDateSelect} />
+            
+            {/* Check if timeslots are available */}
+            {timeslots.length > 0 && (
+              <div className="flex flex-wrap justify-center">
+                <div className="w-full md:w-1/4">
+                  <h2 className="text-lg font-semibold mb-2 text-center">Morning</h2>
+                  {timeslots
+                    .filter(timeslot => new Date(timeslot.start_date).getHours() < 12)
+                    .map((timeslot) => (
+                      <div key={timeslot.pk} className="mb-2 justify-center text-center">
+                        <button onClick={() => handleBookAppointment(timeslot)} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 w-48 rounded">
+                          {formatTime(timeslot.start_date)}
+                        </button>
+                      </div>
+                    ))}
+                </div>
+                <div className="w-full md:w-1/4">
+                  <h2 className="text-lg font-semibold mb-2 text-center">Afternoon</h2>
+                  {timeslots
+                    .filter(timeslot => new Date(timeslot.start_date).getHours() >= 12)
+                    .map((timeslot) => (
+                      <div key={timeslot.pk} className="mb-2 justify-center text-center">
+                        <button onClick={() => handleBookAppointment(timeslot)} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 w-48 rounded">
+                          {formatTime(timeslot.start_date)}
+                        </button>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            )}
           </div>
         </>
       )}
     </div>
   );
-};
+};  
 
 export default Appointments;

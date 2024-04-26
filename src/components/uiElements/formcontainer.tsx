@@ -45,7 +45,7 @@ const FormContainer: React.FC<FormProps> = ({ title, fields, onSubmit}) => {
                             <label htmlFor={fieldName}>{fieldName}</label>
                             <input
                                 className="text-center my-2 border-2 border-gray-300 rounded-md p-1 m-1 w-48"
-                                type={fieldName === 'password' ? 'password' : 'text'}
+                                type={(fieldName === 'password' || fieldName === 'password2') ? 'password' : 'text'}
                                 name={fieldName}
                                 autoComplete='on'
                                 value={formData[fieldName] || ''}
