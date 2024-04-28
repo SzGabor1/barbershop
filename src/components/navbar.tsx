@@ -29,7 +29,7 @@ export default function Navbar() {
                 </header>
                 <nav className="hidden md:block mr-10">
                     <ul className="flex space-x-4">
-                    {token &&<li><a href="/" className="text-xl relative after:bg-black after:absolute after:h-1 after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-500 cursor-pointer">Home</a></li>}
+                    {token &&<li><a href="/home" className="text-xl relative after:bg-black after:absolute after:h-1 after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-500 cursor-pointer">Home</a></li>}
                         {token &&<li><a href="/appointments" className="text-xl relative after:bg-black after:absolute after:h-1 after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-500 cursor-pointer">Appointments</a></li>}
                         {token && <li><a href="#" onClick={handleLogout} className="text-xl relative after:bg-black after:absolute after:h-1 after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-500 cursor-pointer">Logout</a></li>}
                         {!token && <li><a href="/login" className="text-xl relative after:bg-black after:absolute after:h-1 after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-500 cursor-pointer">Login</a></li>}
@@ -58,7 +58,7 @@ export default function Navbar() {
             <div className={`md:hidden ${isOpen ? 'block' : 'hidden'}`}>
                 <div className="bg-blue-300">
                     <ul className="py-4">
-                        {token && <li><a href="/" className="block py-2 px-4 text-white hover:bg-blue-400">Home</a></li>}
+                        {token && <li><a href="/home" className="block py-2 px-4 text-white hover:bg-blue-400">Home</a></li>}
                         {token && <li><a href="/appointments" className="block py-2 px-4 text-white hover:bg-blue-400">Appointments</a></li>}
                         {token && <li><a href="/login" onClick={handleLogout} className="block py-2 px-4 text-white hover:bg-blue-400">Logout</a></li>}
                         {!token && <li><a href="/login" className="text-xl relative after:bg-black after:absolute after:h-1 after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-500 cursor-pointer">Login</a></li>}

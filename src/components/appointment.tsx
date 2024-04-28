@@ -4,7 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import WeekViewDatePicker from './uiElements/weekViewDatepicker';
 import SelectEmployee from './selectemployee';
 import SelectService from './selectservice';
+import Modal from './uiElements/modal';
 
+import SubmitButton from './uiElements/submitButton';
+import BookAppointment from './bookappointment';
 
 interface Employee {
   id: number;
@@ -34,10 +37,30 @@ const Appointments: React.FC = () => {
   const [services, setServices] = useState<Service[]>([]);
   const [selectedService, setSelectedService] = useState<Service | null>(null); // Utilize selectedService state
 
+
+  // for modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState<React.ReactNode>(null);
+
   const formatTime = (dateTimeString: string) => {
     const date = new Date(dateTimeString);
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
+
+
+
+  const openModal = (content: React.ReactNode) => {
+    setModalContent(content);
+    setIsModalOpen(true);
+  };
+
+  // Function to close the modal
+  const closeModal = () => {
+    console.log('Closing modal');
+    setIsModalOpen(false);
+  };
+
+
 
   useEffect(() => {
     if (!token) {
@@ -108,27 +131,35 @@ const Appointments: React.FC = () => {
     setSelectedService(selectedService);
   };
 
+
+
+
   const handleBookAppointment = (timeslot: Timeslot) => {
     console.log('Booking appointment for timeslot:', timeslot.pk);
+    const modalContent = (
+      <BookAppointment 
+        timeslot={timeslot} 
+        service={selectedService?.pk}
+        employeeId={selectedEmployeeId} 
+      />
+    );
+    openModal(modalContent);
   };
+  
 
   return (
-    <div className='m-5'>
-      {selectedEmployeeId ? (
+    <div className='m-5 min-h-screen '>
+      <Modal open={isModalOpen} onClose={closeModal}>
+        {modalContent}
+      </Modal>
         <>
-          <div className="text-center mt-4">
-            <button onClick={() => setSelectedEmployeeId(null)} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
-              Change Employee
-            </button>
-          </div>
-          <h1>{selectedEmployeeId}</h1>
+          {/* <h1>{selectedEmployeeId}</h1> */}
         </>
-      ) : (
         <SelectEmployee
           employees={employees}
           onSelectEmployee={handleEmployeeSelect}
         />
-      )}
+      
       
       {selectedEmployeeId && (
         <>
@@ -136,13 +167,13 @@ const Appointments: React.FC = () => {
             services={services}
             onSelectService={handleServiceSelect}
           />
-          <h1>{selectedService?.pk}</h1>
+          {/* <h1>{selectedService?.pk}</h1> */}
         </>
       )}
   
       {selectedEmployeeId && selectedService && (
         <>
-          <div className='time-selection-wrapper'>
+          <div className='time-selection-wrapper mt-5'>
             <h2 className='time-selection-title text-xl text-center'>Pick a day</h2>
             <WeekViewDatePicker onSelectDate={handleDateSelect} />
             
@@ -155,7 +186,10 @@ const Appointments: React.FC = () => {
                     .filter(timeslot => new Date(timeslot.start_date).getHours() < 12)
                     .map((timeslot) => (
                       <div key={timeslot.pk} className="mb-2 justify-center text-center">
-                        <button onClick={() => handleBookAppointment(timeslot)} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 w-48 rounded">
+                        <button 
+                          onClick={() => handleBookAppointment(timeslot)} 
+                          className={`border-4 ${timeslot.pk === selectedService?.pk ? 'border-blue-500' : 'border-transparent'} bg-blue-500 hover:border-blue-600 text-white font-bold py-1 px-2 w-48 rounded`}
+                        >
                           {formatTime(timeslot.start_date)}
                         </button>
                       </div>
@@ -167,7 +201,10 @@ const Appointments: React.FC = () => {
                     .filter(timeslot => new Date(timeslot.start_date).getHours() >= 12)
                     .map((timeslot) => (
                       <div key={timeslot.pk} className="mb-2 justify-center text-center">
-                        <button onClick={() => handleBookAppointment(timeslot)} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 w-48 rounded">
+                        <button 
+                          onClick={() => handleBookAppointment(timeslot)} 
+                          className={`border-4 ${timeslot.pk === selectedService?.pk ? 'border-blue-500' : 'border-transparent'} bg-blue-500 hover:border-blue-600 text-white font-bold py-1 px-2 w-48 rounded`}
+                        >
                           {formatTime(timeslot.start_date)}
                         </button>
                       </div>
