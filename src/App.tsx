@@ -1,5 +1,3 @@
-import './styles/App.css';
-import React from 'react';
 import { BrowserRouter as Router} from "react-router-dom";
 
 import AllRoutes from './routers/AllRoutes';
