@@ -21,7 +21,7 @@ export const Navbar: React.FC = () =>{
 
     return (
         <section>
-            <div className="navbar-container flex justify-between items-center bg-blue-300">
+            <div className="navbar-container flex justify-between items-center bg-blue-300 h-20">
                 <header>
                     <div className="logo flex items-center">
                         <img className="w-10 h-10 rounded-full" src={logo} alt="barber" />

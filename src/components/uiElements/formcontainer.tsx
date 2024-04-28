@@ -36,7 +36,7 @@ const FormContainer: React.FC<FormProps> = ({ title, fields, onSubmit}) => {
     };
 
     return (
-        <div className="flex justify-center items-center h-full">
+        <div className="flex justify-center items-center">
             <div className="FormContainer text-center border-gray-400 border-2 rounded-md p-3 align-middle">
                 <h1 className='underline mb-6 text-2xl'>{title}</h1>
                 <form onSubmit={handleSubmit}>
@@ -44,7 +44,7 @@ const FormContainer: React.FC<FormProps> = ({ title, fields, onSubmit}) => {
                         <div key={fieldName} className="flex flex-col">
                             <label htmlFor={fieldName}>{fieldName}</label>
                             <input
-                                className="text-center my-2 border-2 border-gray-300 rounded-md p-1 m-1 w-48"
+                                className="text-center my-2 border-2 border-gray-300 rounded-md p-1 m-1 w-64"
                                 type={(fieldName === 'password' || fieldName === 'password2') ? 'password' : 'text'}
                                 name={fieldName}
                                 autoComplete='on'

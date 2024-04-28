@@ -16,18 +16,21 @@ const Register: React.FC = () => {
 
     const handleRegister = (data: { [key: string]: string }) => {
         const { username, password, password2, email, first_name, last_name } = data;
-        if (username === '' || password === '' || password2 === '' || email === '' || first_name === '' || last_name === '') {
+        if (!username || !password || !password2 || !email || !first_name || !last_name) {
             alert('Please fill in all fields');
         } else if (password !== password2) {
             alert('Passwords do not match');
         } else {
-            axios.post(backendURL+'/api/register/', data, { withCredentials: true })
+            axios.post(`${backendURL}/api/register/`, data, { withCredentials: true })
                 .then(() => {
                     navigate('/login');
                 })
                 .catch((error) => {
                     console.error('Registration failed:', error);
-                    // Handle registration failure
+                    if (error.response) {
+                        console.error('Server responded with:', error.response.data);
+
+                    }
                 });
         }
     };
