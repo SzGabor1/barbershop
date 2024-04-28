@@ -17,6 +17,11 @@ const Login: React.FC = () => {
         if (username === '' || password === '') {
             alert('Please fill in all fields');
         } else {
+            //fix https://barbershop.szgabor-dev.hu/undefined/api/token/  i dont need undefined
+
+            console.log(backendURL)
+            console.log(backendURL+'/api/token/')
+            
             axios.post(backendURL+'/api/token/', data, { withCredentials: true }).then((response) => {
                 //console.log(response);
                 localStorage.setItem('access_token', response.data.access);
