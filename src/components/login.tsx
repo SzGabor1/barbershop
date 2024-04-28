@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import FormContainer from './uiElements/formcontainer';
 
 const Login: React.FC = () => {
@@ -8,21 +8,17 @@ const Login: React.FC = () => {
     const navigate = useNavigate();
     const token = localStorage.getItem('access_token');
     useEffect(() => {
-        if (token) 
-             navigate('/');
-    }, []); 
+        if (token)
+            navigate('/');
+    }, []);
 
     const handleLogin = (data: { [key: string]: string }) => {
         const { username, password } = data;
         if (username === '' || password === '') {
             alert('Please fill in all fields');
         } else {
-            //fix https://barbershop.szgabor-dev.hu/undefined/api/token/  i dont need undefined
 
-            console.log(backendURL)
-            console.log(backendURL+'/api/token/')
-            
-            axios.post(backendURL+'/api/token/', data, { withCredentials: true }).then((response) => {
+            axios.post(backendURL + '/api/token/', data, { withCredentials: true }).then((response) => {
                 //console.log(response);
                 localStorage.setItem('access_token', response.data.access);
                 localStorage.setItem('refresh_token', response.data.refresh);
