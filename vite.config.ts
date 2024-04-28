@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import viteTsconfigPaths from 'vite-tsconfig-paths'; // Updated import statement to use default import syntax
+import viteTsconfigPaths from 'vite-tsconfig-paths'; // Change the import statement to use default import syntax
 import svgrPlugin from 'vite-plugin-svgr';
 
 export default defineConfig({
@@ -11,11 +11,12 @@ export default defineConfig({
     react({
       jsxRuntime: 'classic'
     }),
-    viteTsconfigPaths.default(),
+    viteTsconfigPaths(),
     svgrPlugin()
   ],
   build: {
     terserOptions: {
+
       compress: {
         unused: true,
       }
