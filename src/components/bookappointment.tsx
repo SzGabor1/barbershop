@@ -1,43 +1,140 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SubmitButton from './uiElements/submitButton';
-import FormContainer from './uiElements/formcontainer';
 
 interface BookAppointmentProps {
   timeslot: Timeslot;
-  service?: number;
-  employeeId: Employee;
+  service: Service;
+  employee: Employee;
 }
+
 interface Employee {
-    id: number;
-    username: string;
-  }
+  id: number;
+  username: string;
+}
+
 interface Timeslot {
   pk: number;
   start_date: string;
   end_date: string;
 }
 
-const BookAppointment: React.FC<BookAppointmentProps> = ({ timeslot, service, employeeId }) => {
-  // Function to format date to "yyyy-mm-dd hh-mm"
+interface Service {
+  pk: number;
+  name: string;
+  description: string;
+  price: number;
+  duration: string;
+}
+
+const BookAppointment: React.FC<BookAppointmentProps> = ({ timeslot, service, employee }) => {
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [notification, setNotification] = useState(true); // Default value
+    const token = localStorage.getItem('access_token');
   const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
-    const formattedDate = date.toISOString().slice(0, 16).replace('T', ' ');
-    return formattedDate;
+    return date.toISOString().slice(0, 16).replace('T', ' ');
+  };
+
+  const bookAppointment = () => {
+
+    const splitToken = token?.split('.')[1];
+    const decodedUserId = atob(splitToken || '');
+    const userIdJson = JSON.parse(decodedUserId);
+    const userId = userIdJson.user_id;
+
+    const serviceId = service.pk;
+    const timeslotId = timeslot.pk;
+
+    const data = {
+      user: userId,
+      service: serviceId,
+      email: email,
+      phone: phone,
+      notification: notification,
+      timeslot: timeslotId,
+    };
+
+    fetch('http://127.0.0.1:8000/api/appointments/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        // Assuming you have an access token stored in local storage
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        // Handle success response
+        console.log('Appointment booked successfully:', data);
+        // You can redirect or show a success message here
+      })
+      .catch(error => {
+        // Handle error
+        console.error('Error booking appointment:', error);
+        // You can show an error message to the user
+      });
   };
 
   return (
-    <div>
-      <h2>Appointment Booking</h2>
-      <p>You are booking an appointment for timeslot: {timeslot.pk}</p>
-      <p>Start Time: {formatDate(timeslot.start_date)}</p>
-      {service !== null && employeeId !== null && (
-        <>
-          <p>Service ID: {service}</p>
-          <p>Employee ID: {employeeId}</p>
-        </>
-      )}
-      <SubmitButton label="Confirm Appointment" labelcolor='white' bgcolor='blue' onSubmit={() => {}} />
+<div className="container mx-auto p-4 text-center">
+  <h2 className="text-2xl font-bold mb-4 text-center underline">Appointment Booking</h2>
+
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 justify-center items-center">
+    <div className="text-center">
+      <p className='text-xl my-2'><span className="font-semibold">Service:</span> {service.name}</p>
+      <p className='text-xl my-2'><span className="font-semibold">Employee:</span> {employee.username}</p>
+      <p className='text-xl my-2'><span className="font-semibold">Price:</span> {service.price} Ft</p>
+      <p className='text-xl my-2'><span className="font-semibold">Date:</span> {formatDate(timeslot.start_date)}</p>
     </div>
+
+    <div className="flex flex-col md:items-start">
+      <div className="mb-4">
+        <label htmlFor="email" className="text-xl font-semibold block">Email:</label>
+        <input
+          type="email"
+          id="email"
+          className="border border-gray-300 rounded px-3 py-2 w-full md:w-80 text-center"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </div>
+
+      <div className="mb-4">
+        <label htmlFor="phone" className="text-xl font-semibold block">Phone Number:</label>
+        <input
+          type="tel"
+          id="phone"
+          className="border border-gray-300 rounded px-3 py-2 w-full md:w-80 text-center"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+        />
+      </div>
+
+      <div className="mb-4">
+        <label htmlFor="notification" className="text-xl font-semibold block">Notification:</label>
+        <select
+          id="notification"
+          className="border border-gray-300 rounded px-3 py-2 w-full md:w-80"
+          value={notification.toString()}
+          onChange={(e) => setNotification(e.target.value === 'true')}
+        >
+          <option value="true">Yes</option>
+          <option value="false">No</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <SubmitButton label="Confirm Appointment" labelcolor="white" bgcolor="blue" onSubmit={bookAppointment} />
+</div>
+
   );
 };
 

@@ -11,8 +11,8 @@ function AllRoutes() {
 
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="Home" element={<Main />} />
+      <Route path="/" element={<Main />} />
+      <Route path="Home" element={<Home />} />
       <Route path="Login" element={<Login />} />
       <Route path="Appointments" element={<Appointment />} />
       <Route path="Register" element={<Register />} />

@@ -6,7 +6,6 @@ import SelectEmployee from './selectemployee';
 import SelectService from './selectservice';
 import Modal from './uiElements/modal';
 
-import SubmitButton from './uiElements/submitButton';
 import BookAppointment from './bookappointment';
 
 interface Employee {
@@ -32,10 +31,11 @@ const Appointments: React.FC = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem('access_token');
   const [employees, setEmployees] = useState<Employee[]>([]);
-  const [selectedEmployeeId, setSelectedEmployeeId] = useState<number | null>(null);
+const [selectedEmployee, setSelectedEmployee] = useState<Employee | undefined>(undefined);
+
   const [timeslots, setTimeslots] = useState<Timeslot[]>([]);
   const [services, setServices] = useState<Service[]>([]);
-  const [selectedService, setSelectedService] = useState<Service | null>(null); // Utilize selectedService state
+  const [selectedService, setSelectedService] = useState<Service | undefined>(undefined); // Utilize selectedService state
 
 
   // for modal
@@ -66,7 +66,7 @@ const Appointments: React.FC = () => {
     if (!token) {
       navigate('/login');
     } else {
-      // Fetch employees
+
       axios.get('http://127.0.0.1:8000/api/getemployees/', {
         headers: {
           Authorization: `Bearer ${token}`
@@ -80,10 +80,12 @@ const Appointments: React.FC = () => {
         });
 
       // Fetch services when selectedEmployeeId changes
-      if (selectedEmployeeId) {
+
+
+      if (selectedEmployee) {
         axios.get('http://localhost:8000/api/services/employee/', {
           params: {
-            'employee_id': selectedEmployeeId,
+            'employee_id': selectedEmployee.id,
           },
           headers: {
             Authorization: `Bearer ${token}`
@@ -98,52 +100,63 @@ const Appointments: React.FC = () => {
           });
       }
     }
-  }, [selectedEmployeeId, token, navigate]);
+  }, [selectedEmployee]);
 
   const handleDateSelect = (selectedDate: Date) => {
-    // Convert start_date and end_date to string format
+
     const start_date = selectedDate.toISOString();
     selectedDate.setDate(selectedDate.getDate() + 1);
     const end_date = selectedDate.toISOString();
 
     console.log('Selected date:', start_date, end_date);
+if (selectedEmployee) {
 
-    axios.get('http://localhost:8000/api/timeslots/range/', {
-      params: {
-        'start_date': start_date,
-        'end_date': end_date,
-        'employee_id': selectedEmployeeId,
-      }
-    }).then((response) => {
-      setTimeslots(response.data.results);
-    }).catch((error) => {
-      console.log('Error fetching timeslots:', error);
-    });
+  axios.get('http://localhost:8000/api/timeslots/range/', {
+    params: {
+      'start_date': start_date,
+      'end_date': end_date,
+      'employee_id': selectedEmployee.id,
+    }
+  }).then((response) => {
+    setTimeslots(response.data.results);
+  }).catch((error) => {
+    console.log('Error fetching timeslots:', error);
+  });
+}
   };
+    
+
+
 
   const handleEmployeeSelect = (selectedEmployee: Employee) => {
     setTimeslots([]);
-    setSelectedEmployeeId(selectedEmployee.id);
-    setSelectedService(null); // Reset selected service when employee changes
+    setSelectedEmployee(selectedEmployee);
+    setSelectedService(null); 
   };
 
   const handleServiceSelect = (selectedService: Service) => {
     setSelectedService(selectedService);
+    
   };
 
 
 
 
   const handleBookAppointment = (timeslot: Timeslot) => {
-    console.log('Booking appointment for timeslot:', timeslot.pk);
-    const modalContent = (
-      <BookAppointment 
-        timeslot={timeslot} 
-        service={selectedService?.pk}
-        employeeId={selectedEmployeeId} 
-      />
-    );
-    openModal(modalContent);
+
+    if (selectedEmployee) {
+      const modalContent = (
+        <BookAppointment 
+          timeslot={timeslot} 
+          service={selectedService}
+          employee={selectedEmployee} 
+        />
+      );
+      openModal(modalContent);
+    } else {
+      // Handle the case where selectedEmployee is undefined
+      console.error('Cannot book appointment: selected employee is undefined');
+    }
   };
   
 
@@ -153,7 +166,7 @@ const Appointments: React.FC = () => {
         {modalContent}
       </Modal>
         <>
-          {/* <h1>{selectedEmployeeId}</h1> */}
+          {/* <h1>{selectedEmployee.id}</h1>  */}
         </>
         <SelectEmployee
           employees={employees}
@@ -161,7 +174,7 @@ const Appointments: React.FC = () => {
         />
       
       
-      {selectedEmployeeId && (
+      {selectedEmployee && (
         <>
           <SelectService
             services={services}
@@ -171,7 +184,7 @@ const Appointments: React.FC = () => {
         </>
       )}
   
-      {selectedEmployeeId && selectedService && (
+      {selectedEmployee && selectedService && (
         <>
           <div className='time-selection-wrapper mt-5'>
             <h2 className='time-selection-title text-xl text-center'>Pick a day</h2>
