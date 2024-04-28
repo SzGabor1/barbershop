@@ -8,7 +8,7 @@ import Appointment from '../components/appointment';
 import Register from '../components/register';
 import Main from '../components/mainpage';
 
-function AllRoutes() {
+export const AllRoutes: React.FC = () =>{
 
   return (
     <Routes>
@@ -21,4 +21,3 @@ function AllRoutes() {
   )
 }
 
-export default AllRoutes

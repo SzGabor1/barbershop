@@ -3,7 +3,7 @@ import { useState } from "react";
 import logo from "../assets/barberimage.jpg";
 import { useNavigate } from "react-router-dom";
 
-export default function Navbar() {
+export const Navbar: React.FC = () =>{
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
     const token = localStorage.getItem('access_token');

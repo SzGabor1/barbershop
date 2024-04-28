@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router} from "react-router-dom";
 
-import AllRoutes from './routers/AllRoutes';
-import Navbar from './components/navbar';
-import Footer from './components/footer';
-function App() {
+import {Navbar} from './components/navbar';
+import {AllRoutes} from './routers/AllRoutes';
+import {Footer} from './components/footer';
 
+const App:React.FC = () => {
 
   return (
     <>
@@ -18,4 +18,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
