@@ -10,5 +10,13 @@ export default defineConfig({
     }),
     viteTsconfigPaths(),
     svgrPlugin()
-  ]
+  ],
+  build:{
+    terserOptions:{
+
+      compress: {
+        unused: true,
+      }
+    }
+  }
 });

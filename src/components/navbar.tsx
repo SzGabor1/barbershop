@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import logo from "../assets/barberimage.jpg";
 import { useNavigate } from "react-router-dom";

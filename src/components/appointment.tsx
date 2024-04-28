@@ -35,7 +35,10 @@ const [selectedEmployee, setSelectedEmployee] = useState<Employee | undefined>(u
 
   const [timeslots, setTimeslots] = useState<Timeslot[]>([]);
   const [services, setServices] = useState<Service[]>([]);
-  const [selectedService, setSelectedService] = useState<Service | undefined>(undefined); 
+  const [selectedService, setSelectedService] = useState<Service>({} as Service);
+
+
+
 
 
   // for modal
@@ -131,7 +134,7 @@ if (selectedEmployee) {
   const handleEmployeeSelect = (selectedEmployee: Employee) => {
     setTimeslots([]);
     setSelectedEmployee(selectedEmployee);
-    setSelectedService(undefined); 
+    setSelectedService({} as Service); 
   };
 
   const handleServiceSelect = (selectedService: Service) => {
@@ -144,18 +147,22 @@ if (selectedEmployee) {
 
   const handleBookAppointment = (timeslot: Timeslot) => {
 
-    if (selectedEmployee && selectedService) {
-      const modalContent = (
-        <BookAppointment 
+    
+
+    if (selectedEmployee) {
+
+
+        const modalContent = (
+          <BookAppointment 
           timeslot={timeslot} 
           service={selectedService}
           employee={selectedEmployee} 
-        />
-      );
-      openModal(modalContent);
+          />
+        );
+        openModal(modalContent);
+      
     } else {
-      // Handle the case where selectedEmployee is undefined
-      console.error('Cannot book appointment: selected employee is undefined');
+      console.error('Employee not selected');
     }
   };
   
@@ -184,7 +191,7 @@ if (selectedEmployee) {
         </>
       )}
   
-      {selectedEmployee && selectedService && (
+      {selectedEmployee && selectedService.pk && (
         <>
           <div className='time-selection-wrapper mt-5'>
             <h2 className='time-selection-title text-xl text-center'>Pick a day</h2>
