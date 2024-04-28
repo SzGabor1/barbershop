@@ -4,6 +4,9 @@ import viteTsconfigPaths from 'vite-tsconfig-paths'; // Change the import statem
 import svgrPlugin from 'vite-plugin-svgr';
 
 export default defineConfig({
+  server: {
+    port: 4175,
+  }
   plugins: [
     react({
       jsxRuntime: 'classic'
@@ -11,8 +14,8 @@ export default defineConfig({
     viteTsconfigPaths(),
     svgrPlugin()
   ],
-  build:{
-    terserOptions:{
+  build: {
+    terserOptions: {
 
       compress: {
         unused: true,
