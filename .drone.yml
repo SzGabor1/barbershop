@@ -1,0 +1,22 @@
+kind: pipeline
+name: deploy barbershop
+
+steps:
+- name: build react app
+  image: docker
+  commands:
+  - docker-compose up --build -d
+  volumes:
+  - name: docker_sock
+    path: /var/run/docker.sock
+
+volumes:
+  - name: docker_sock
+    host:
+      path: /var/run/docker.sock
+
+when:
+  branch:
+  - main
+  event:
+  - push
