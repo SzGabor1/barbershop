@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import FormContainer from './uiElements/formcontainer';
 
 const Login: React.FC = () => {
+    const backendURL: string = import.meta.env.VITE_BACKENDURL;
     const navigate = useNavigate();
     const token = localStorage.getItem('access_token');
     useEffect(() => {
@@ -16,7 +17,7 @@ const Login: React.FC = () => {
         if (username === '' || password === '') {
             alert('Please fill in all fields');
         } else {
-            axios.post('http://localhost:8000/api/token/', data, { withCredentials: true }).then((response) => {
+            axios.post(backendURL+'/api/token/', data, { withCredentials: true }).then((response) => {
                 //console.log(response);
                 localStorage.setItem('access_token', response.data.access);
                 localStorage.setItem('refresh_token', response.data.refresh);

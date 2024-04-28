@@ -3,8 +3,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; 
 import FormContainer from './uiElements/formcontainer';
 
-
 const Register: React.FC = () => {
+    const backendURL: string = import.meta.env.VITE_BACKENDURL;
     const navigate = useNavigate();
 
     const token = localStorage.getItem('access_token');
@@ -21,7 +21,7 @@ const Register: React.FC = () => {
         } else if (password !== password2) {
             alert('Passwords do not match');
         } else {
-            axios.post('http://localhost:8000/api/register/', data, { withCredentials: true })
+            axios.post(backendURL+'/api/register/', data, { withCredentials: true })
                 .then(() => {
                     navigate('/login');
                 })

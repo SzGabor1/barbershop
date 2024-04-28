@@ -28,6 +28,7 @@ interface Service {
 }
 
 const Appointments: React.FC = () => {
+  const backendURL: string = import.meta.env.VITE_BACKENDURL;
   const navigate = useNavigate();
   const token = localStorage.getItem('access_token');
   const [employees, setEmployees] = useState<Employee[]>([]);
@@ -70,7 +71,7 @@ const [selectedEmployee, setSelectedEmployee] = useState<Employee | undefined>(u
       navigate('/login');
     } else {
 
-      axios.get('http://127.0.0.1:8000/api/getemployees/', {
+      axios.get(backendURL+'/api/getemployees/', {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -86,7 +87,7 @@ const [selectedEmployee, setSelectedEmployee] = useState<Employee | undefined>(u
 
 
       if (selectedEmployee) {
-        axios.get('http://localhost:8000/api/services/employee/', {
+        axios.get(backendURL+'/api/services/employee/', {
           params: {
             'employee_id': selectedEmployee.id,
           },
@@ -114,7 +115,7 @@ const [selectedEmployee, setSelectedEmployee] = useState<Employee | undefined>(u
     console.log('Selected date:', start_date, end_date);
 if (selectedEmployee) {
 
-  axios.get('http://localhost:8000/api/timeslots/range/', {
+  axios.get(backendURL+'/api/timeslots/range/', {
     params: {
       'start_date': start_date,
       'end_date': end_date,
