@@ -35,7 +35,7 @@ const [selectedEmployee, setSelectedEmployee] = useState<Employee | undefined>(u
 
   const [timeslots, setTimeslots] = useState<Timeslot[]>([]);
   const [services, setServices] = useState<Service[]>([]);
-  const [selectedService, setSelectedService] = useState<Service | undefined>(undefined); // Utilize selectedService state
+  const [selectedService, setSelectedService] = useState<Service | undefined>(undefined); 
 
 
   // for modal
@@ -131,7 +131,7 @@ if (selectedEmployee) {
   const handleEmployeeSelect = (selectedEmployee: Employee) => {
     setTimeslots([]);
     setSelectedEmployee(selectedEmployee);
-    setSelectedService(null); 
+    setSelectedService(undefined); 
   };
 
   const handleServiceSelect = (selectedService: Service) => {
@@ -144,7 +144,7 @@ if (selectedEmployee) {
 
   const handleBookAppointment = (timeslot: Timeslot) => {
 
-    if (selectedEmployee) {
+    if (selectedEmployee && selectedService) {
       const modalContent = (
         <BookAppointment 
           timeslot={timeslot} 
