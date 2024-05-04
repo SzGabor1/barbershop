@@ -4,14 +4,14 @@ import SubmitButton from './submitButton';
 interface FormProps {
     title: string;
     fields: string[];
-    onSubmit: (data: { [key: string]: string }) => void; // Modified onSubmit type
+    onSubmit: (data: { [key: string]: string }) => void;
 }
 
 interface FormData {
     [key: string]: string;
 }
 
-const FormContainer: React.FC<FormProps> = ({ title, fields, onSubmit}) => {
+const FormContainer: React.FC<FormProps> = ({ title, fields, onSubmit }) => {
     const [formData, setFormData] = React.useState<FormData>({});
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,15 +24,15 @@ const FormContainer: React.FC<FormProps> = ({ title, fields, onSubmit}) => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        
-        // Restructure form data to match the expected format
+
         const formattedData = fields.reduce((acc, fieldName) => {
             acc[fieldName] = formData[fieldName] || '';
             return acc;
         }, {} as { [key: string]: string });
 
         onSubmit(formattedData);
-        setFormData({});
+
+        // Do not reset the form data state here
     };
 
     return (
@@ -54,7 +54,7 @@ const FormContainer: React.FC<FormProps> = ({ title, fields, onSubmit}) => {
                             />
                         </div>
                     ))}
-                    <SubmitButton onSubmit={()=>{}} label="Submit" labelcolor="white" bgcolor="lightblue" />
+                    <SubmitButton onSubmit={() => { }} label="Submit" labelcolor="white" bgcolor="lightblue" />
                 </form>
             </div>
         </div>

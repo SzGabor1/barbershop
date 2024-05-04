@@ -24,8 +24,8 @@ export const Navbar: React.FC = () =>{
             <div className="navbar-container flex justify-between items-center bg-blue-300 h-20">
                 <header>
                     <div className="logo flex items-center">
-                        <img className="w-10 h-10 rounded-full" src={logo} alt="barber" />
-                        <p className="ml-5 underline text-xl">Barbershop</p>
+                        <img className="w-10 ml-2 h-10 rounded-full" src={logo} alt="barber" />
+                        <p className="ml-5 text-2xl">Barbershop</p>
                     </div>
                 </header>
                 <nav className="hidden md:block mr-10">

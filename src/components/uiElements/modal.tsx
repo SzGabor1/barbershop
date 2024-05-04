@@ -9,7 +9,6 @@ interface ModalProps {
 
 export default function Modal({ open, onClose, children }: ModalProps): ReturnType<FC> {
     useEffect(() => {
-        // Add event listener to disable scrolling when modal is open
         const disableScroll = () => {
         if (open) {
         document.documentElement.style.overflowY = 'hidden';
@@ -23,7 +22,6 @@ export default function Modal({ open, onClose, children }: ModalProps): ReturnTy
         disableScroll();
 
         return () => {
-            // Remove event listener on component unmount
             document.documentElement.style.overflowY = '';
             document.body.style.overflowY = '';
         };
