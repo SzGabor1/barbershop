@@ -1,18 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import FormContainer from './uiElements/formcontainer';
-
-interface FormData {
-    username: string;
-    password: string;
-    password2: string;
-    email: string;
-    first_name: string;
-    last_name: string;
-}
+import FormContainer, { FormData } from './uiElements/formcontainer';
 
 const Register: React.FC = () => {
     const backendURL: string = import.meta.env.VITE_BACKENDURL;
@@ -24,14 +15,7 @@ const Register: React.FC = () => {
             navigate('/');
     }, [navigate, token]);
 
-    const [formData] = useState<FormData>({
-        username: '',
-        password: '',
-        password2: '',
-        email: '',
-        first_name: '',
-        last_name: ''
-    });
+
 
     const handleRegister = (data: FormData) => {
         const { username, password, password2, email, first_name, last_name } = data;
@@ -68,7 +52,6 @@ const Register: React.FC = () => {
             <FormContainer
                 title="Register"
                 fields={['username', 'password', 'password2', 'email', 'first_name', 'last_name']}
-                formData={formData}
                 onSubmit={handleRegister}
             />
         </div>

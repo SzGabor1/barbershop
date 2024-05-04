@@ -1,13 +1,13 @@
 import React from 'react';
 import SubmitButton from './submitButton';
 
-interface FormProps {
+export interface FormProps {
     title: string;
     fields: string[];
-    onSubmit: (data: { [key: string]: string }) => void;
+    onSubmit: (data: FormData) => void;
 }
 
-interface FormData {
+export interface FormData {
     [key: string]: string;
 }
 
@@ -28,11 +28,9 @@ const FormContainer: React.FC<FormProps> = ({ title, fields, onSubmit }) => {
         const formattedData = fields.reduce((acc, fieldName) => {
             acc[fieldName] = formData[fieldName] || '';
             return acc;
-        }, {} as { [key: string]: string });
+        }, {} as FormData);
 
         onSubmit(formattedData);
-
-        // Do not reset the form data state here
     };
 
     return (
