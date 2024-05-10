@@ -2,10 +2,10 @@ kind: pipeline
 name: deploy barbershop
 
 steps:
-- name: build react app
+- name: build and deploy barbershop
   image: docker
   commands:
-  - docker-compose up --build -d
+  - docker-compose -p barbershop up --build -d
   volumes:
   - name: docker_sock
     path: /var/run/docker.sock
