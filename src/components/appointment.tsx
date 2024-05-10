@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import WeekViewDatePicker from './uiElements/weekViewDatepicker';
 import SelectEmployee from './selectemployee';
 import SelectService from './selectservice';
@@ -30,8 +29,8 @@ interface Service {
 
 const Appointments: React.FC = () => {
   const backendURL: string = import.meta.env.VITE_BACKENDURL;
-  const navigate = useNavigate();
-  const token = localStorage.getItem('access_token');
+  // const navigate = useNavigate();
+  // const token = localStorage.getItem('access_token');
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | undefined>(undefined);
   const [timeslots, setTimeslots] = useState<Timeslot[]>([]);
@@ -39,6 +38,7 @@ const Appointments: React.FC = () => {
   const [selectedService, setSelectedService] = useState<Service>({} as Service);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState<React.ReactNode>(null);
+  const [appSelectedDate, setAppSelectedDate] = useState(new Date());
 
   const formatTime = (dateTimeString: string) => {
     const date = new Date(dateTimeString);
@@ -52,16 +52,13 @@ const Appointments: React.FC = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
+    handleDateSelect(appSelectedDate);
   };
 
   useEffect(() => {
-    if (!token) {
-      navigate('/login');
-    } else {
+
       axios.get(backendURL+'/api/getemployees/', {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+
       })
         .then(response => {
           setEmployees(response.data.results);
@@ -70,7 +67,7 @@ const Appointments: React.FC = () => {
           console.error('Error fetching employees:', error);
           toast.error('Failed to fetch employees. Please try again later.');
         });
-    }
+    
   }, []);
 
   useEffect(() => {
@@ -79,9 +76,6 @@ const Appointments: React.FC = () => {
         params: {
           'employee_id': selectedEmployee.id,
         },
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
       })
         .then((response) => {
           setServices(response.data.results);
@@ -93,10 +87,14 @@ const Appointments: React.FC = () => {
     }
   }, [selectedEmployee]);
 
+
   const handleDateSelect = (selectedDate: Date) => {
+    setAppSelectedDate(selectedDate);
     const start_date = selectedDate.toISOString();
-    selectedDate.setDate(selectedDate.getDate() + 1);
-    const end_date = selectedDate.toISOString();
+    const end_date = new Date(selectedDate);
+    end_date.setDate(end_date.getDate() + 1);
+    end_date.toISOString();
+
 
     if (selectedEmployee) {
       axios.get(backendURL+'/api/timeslots/range/', {

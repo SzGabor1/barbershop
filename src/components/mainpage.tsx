@@ -14,12 +14,12 @@ const Main: React.FC = () => {
 
     useEffect(() => {
         if (token) {
-            navigate('/Home');
+            navigate('/home');
         }
     }, []);
 
     const navigateToAppointments = () => {
-        navigate('/Login');
+        navigate('/appointments');
     }
 
 
@@ -39,7 +39,7 @@ const Main: React.FC = () => {
         <div className="home-container flex flex-col mt-5 relative">
             <div className="welcome w-3/4 mx-auto">
 
-            <p className="text-center text-xlfont-bold mb-5 text-4xl">Welcome to our barbershop!</p>
+            <p className="text-center text-xlfont-bold mb-5 text-4xl">Welcome to our  barbershop!</p>
             <p className="text-center mb-8">Step into a world of style and sophistication where every haircut tells a story. Our homey yet chic atmosphere invites you to relax and unwind while our skilled barbers work their magic. From classic cuts to modern trends, we cater to every style preference. As you wait for your turn, take a glimpse at our vibrant showcase displayed on our digital slider. Each image captures the essence of our craftsmanship and attention to detail. And when you're ready to elevate your grooming experience, simply click 'Book Now' to secure your appointment. Join us in shaping more than just hairstyles; join us in shaping memories.</p>
             </div>
             <Slider {...settings} className="w-full relative">

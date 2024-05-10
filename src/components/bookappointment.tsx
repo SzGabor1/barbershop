@@ -67,31 +67,48 @@ const BookAppointment: React.FC<BookAppointmentProps> = ({ timeslot, service, em
       return;
     }
 
-    const splitToken = token?.split('.')[1];
+    interface Data {
+      service: number;
+      email: string;
+      phone: string;
+      notification: boolean;
+      timeslot: number;
+      user?: number;
+    }
+
+    let userId;
+
+    
+    if(token) {
+      const splitToken = token?.split('.')[1];
     const decodedUserId = atob(splitToken || '');
     const userIdJson = JSON.parse(decodedUserId);
-    const userId = userIdJson.user_id;
-  
+    userId = userIdJson.user_id;
+    }
+
     const serviceId = service.pk;
     const timeslotId = timeslot.pk;
   
-    const data = {
-      user: userId,
+    const data : Data = {
       service: serviceId,
       email: email,
       phone: phone,
       notification: notification,
       timeslot: timeslotId,
     };
+    
+    if (token){
+      data.user = userId;
+    }
+
   
     axios.post(backendURL+'/api/appointments/', data, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
       }
     })
     .then(response => {
-      console.log('Appointment booked successfully:', response.data);
+      console.log('Appointment booked successfully:', response.status);
       toast.success('Appointment booked successfully!');
       onClose();
     })

@@ -13,10 +13,10 @@ export const AllRoutes: React.FC = () =>{
   return (
     <Routes>
       <Route path="/" element={<Main />} />
-      <Route path="Home" element={<Home />} />
-      <Route path="Login" element={<Login />} />
-      <Route path="Appointments" element={<Appointment />} />
-      <Route path="Register" element={<Register />} />
+      <Route path="home" element={<Home />} />
+      <Route path="login" element={<Login />} />
+      <Route path="appointments" element={<Appointment />} />
+      <Route path="register" element={<Register />} />
     </Routes>
   )
 }
