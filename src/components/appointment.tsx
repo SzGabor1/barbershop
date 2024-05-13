@@ -8,6 +8,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import BookAppointment from './bookappointment';
 
+import bgImage from '../assets/bg3.jpg';
+
 interface Employee {
   id: number;
   username: string;
@@ -153,72 +155,79 @@ const handleBookAppointment = (timeslot: Timeslot) => {
 };
 
 
-  return (<>
-    <ToastContainer />
-    <div className='m-5 min-h-screen '>
+return (
+  <>
+  <ToastContainer />
+  <div className="relative p-32">
+    <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${bgImage})`, zIndex: -1}}></div>
+    <div className=" min-h-screen flex flex-col items-center justify-center">
       <Modal open={isModalOpen} onClose={closeModal}>
         {modalContent}
       </Modal>
-      <>
-        {/* <h1>{selectedEmployee.id}</h1>  */}
-      </>
+
+      {/* Selected Employee */}
       <SelectEmployee
         employees={employees}
         onSelectEmployee={handleEmployeeSelect}
-        />
+      />
+
+      {/* Selected Service */}
       {selectedEmployee && (
-        <>
-          <SelectService
-            services={services}
-            onSelectService={handleServiceSelect}
-            />
-        </>
+        <SelectService
+          services={services}
+          onSelectService={handleServiceSelect}
+        />
       )}
+
+      {/* Time Selection */}
       {selectedEmployee && selectedService.pk && (
-        <>
-          <div className='time-selection-wrapper mt-5'>
-            <h2 className='time-selection-title text-xl text-center'>Pick a day</h2>
-            <WeekViewDatePicker onSelectDate={handleDateSelect} />
-            {timeslots.length > 0 && (
-              <div className="flex flex-wrap justify-center">
-                <div className="w-full md:w-1/4">
-                  <h2 className="text-lg font-semibold mb-2 text-center">Morning</h2>
+        <div className="time-selection-wrapper mt-5">
+          <h2 className="time-selection-title text-xl text-center mb-3">Pick a day</h2>
+          <WeekViewDatePicker onSelectDate={handleDateSelect} />
+
+          {/* Time Slots */}
+          {timeslots.length > 0 && (
+            <div className="flex flex-wrap justify-center">
+              <div className="w-full md:w-1/2">
+                <div className="text-center">
+                  <h2 className="text-lg font-semibold mb-2">Morning</h2>
                   {timeslots
                     .filter(timeslot => new Date(timeslot.start_date).getHours() < 12)
-                    .map((timeslot) => (
-                      <div key={timeslot.pk} className="mb-2 justify-center text-center">
-                        <button 
-                          onClick={() => handleBookAppointment(timeslot)} 
-                          className={`border-4 ${timeslot.pk === selectedService?.pk ? 'border-blue-500' : 'border-transparent'} bg-blue-500 hover:border-blue-600 text-white font-bold py-1 px-2 w-48 rounded`}
-                          >
-                          {formatTime(timeslot.start_date)}
-                        </button>
-                      </div>
-                    ))}
-                </div>
-                <div className="w-full md:w-1/4">
-                  <h2 className="text-lg font-semibold mb-2 text-center">Afternoon</h2>
-                  {timeslots
-                    .filter(timeslot => new Date(timeslot.start_date).getHours() >= 12)
-                    .map((timeslot) => (
-                      <div key={timeslot.pk} className="mb-2 justify-center text-center">
-                        <button 
-                          onClick={() => handleBookAppointment(timeslot)} 
-                          className={`border-4 ${timeslot.pk === selectedService?.pk ? 'border-blue-500' : 'border-transparent'} bg-blue-500 hover:border-blue-600 text-white font-bold py-1 px-2 w-48 rounded`}
-                          >
-                          {formatTime(timeslot.start_date)}
-                        </button>
-                      </div>
+                    .map(timeslot => (
+                      <button
+                        key={timeslot.pk}
+                        onClick={() => handleBookAppointment(timeslot)}
+                        className={`border-4 ${timeslot.pk === selectedService?.pk ? 'border-yellow-600' : 'border-transparent'} bg-yellow-600 hover:border-yellow-500 text-white font-bold py-2 px-4 mb-2 rounded`}
+                      >
+                        {formatTime(timeslot.start_date)}
+                      </button>
                     ))}
                 </div>
               </div>
-            )}
-          </div>
-        </>
+              <div className="w-full md:w-1/2">
+                <div className="text-center">
+                  <h2 className="text-lg font-semibold mb-2">Afternoon</h2>
+                  {timeslots
+                    .filter(timeslot => new Date(timeslot.start_date).getHours() >= 12)
+                    .map(timeslot => (
+                      <button
+                        key={timeslot.pk}
+                        onClick={() => handleBookAppointment(timeslot)}
+                        className={`border-4 ${timeslot.pk === selectedService?.pk ? 'border-yellow-600' : 'border-transparent'} bg-yellow-600 hover:border-yellow-500 text-white font-bold py-2 px-4 mb-2 rounded`}
+                      >
+                        {formatTime(timeslot.start_date)}
+                      </button>
+                    ))}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       )}
     </div>
-      </>
-  );
+  </div>
+</>
+);
 };  
 
 export default Appointments;

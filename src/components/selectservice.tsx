@@ -25,7 +25,7 @@ const SelectService: React.FC<SelectServiceProps> = ({ services, onSelectService
         <div className="flex flex-wrap">
           {services.map(service => (
             <div key={service.pk} className="service">
-              <button onClick={() => handleServiceSelect(service)} className="px-3 py-1 rounded-lg bg-blue-500 text-white hover:bg-blue-600 mx-2">{service.name}</button>
+              <button onClick={() => handleServiceSelect(service)} className="px-3 py-1 rounded-lg bg-yellow-600 text-white hover:bg-yellow-500 mx-2">{service.name}</button>
             </div>
           ))}
         </div>

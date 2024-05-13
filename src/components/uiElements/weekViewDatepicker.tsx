@@ -84,7 +84,7 @@ const WeekViewDatePicker: React.FC<WeekViewDatePickerProps> = ({ onSelectDate })
             <button
               onClick={() => handleClickOnDate(datesForCurrentWeek[index])}
               key={index}
-              className={`px-3 py-1 rounded-lg ${isPastDate ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-600'} mr-2 mb-2`}
+              className={`px-3 py-1 rounded-lg ${isPastDate ? 'bg-gray-400 cursor-not-allowed' : 'bg-yellow-600 text-white hover:bg-yellow-500'} mr-2 mb-2`}
               disabled={isPastDate}
             >
               {day} {datesForCurrentWeek[index].getDate()}
