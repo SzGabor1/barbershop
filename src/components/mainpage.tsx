@@ -1,12 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-
-import image1 from '../assets/output.jpg';
-import image2 from '../assets/output (1).jpg';
-import image3 from '../assets/output (2).jpg';
 
 import SubmitButton from './uiElements/submitButton';
 
@@ -25,19 +20,6 @@ const Main: React.FC = () => {
     const navigateToAppointments = () => {
         navigate('/appointments');
     }
-
-
-    // Slider settings
-    const settings = {
-        dots: true,
-        arrows: false,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 2000
-    };
 
     return (
 <div className="home-container flex-col bg-cover bg-center relative" style={{ backgroundImage: `url(${bg})`, minHeight: '100vh' }}>

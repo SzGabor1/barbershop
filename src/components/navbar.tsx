@@ -16,6 +16,7 @@ export const Navbar: React.FC = () => {
         localStorage.removeItem('refresh_token');
         console.log('Logged out');
         navigate('/login');
+        toggleMenu();
     };
 
     const navigateToHome = () => {
@@ -24,6 +25,7 @@ export const Navbar: React.FC = () => {
         } else {
             navigate('/');
         }
+        toggleMenu();
     }
 
     return (
