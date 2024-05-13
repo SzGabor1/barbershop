@@ -9,7 +9,7 @@ interface ButtonProps {
 
 const SubmitButton: React.FC<ButtonProps> = ({ label, labelcolor, bgcolor, onSubmit }) => {
     return (
-        <button onClick={onSubmit} style={{ color: labelcolor, backgroundColor: bgcolor }} className="font-bold py-2 border-2 px-4 rounded-md">
+        <button onClick={onSubmit} style={{ color: labelcolor, backgroundColor: bgcolor}} className="font-bold py-2 px-4 rounded-md">
             {label}
         </button>
     );

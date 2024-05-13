@@ -8,6 +8,10 @@ import image1 from '../assets/output.jpg';
 import image2 from '../assets/output (1).jpg';
 import image3 from '../assets/output (2).jpg';
 
+import SubmitButton from './uiElements/submitButton';
+
+import bg from '../assets/bg.jpg';
+
 const Main: React.FC = () => {
     const token = localStorage.getItem('access_token');
     const navigate = useNavigate();
@@ -36,27 +40,22 @@ const Main: React.FC = () => {
     };
 
     return (
-        <div className="home-container flex flex-col mt-5 relative">
-            <div className="welcome w-3/4 mx-auto">
-
-            <p className="text-center text-xlfont-bold mb-5 text-4xl">Welcome to our  barbershop!</p>
-            <p className="text-center mb-8">Step into a world of style and sophistication where every haircut tells a story. Our homey yet chic atmosphere invites you to relax and unwind while our skilled barbers work their magic. From classic cuts to modern trends, we cater to every style preference. As you wait for your turn, take a glimpse at our vibrant showcase displayed on our digital slider. Each image captures the essence of our craftsmanship and attention to detail. And when you're ready to elevate your grooming experience, simply click 'Book Now' to secure your appointment. Join us in shaping more than just hairstyles; join us in shaping memories.</p>
+<div className="home-container flex-col bg-cover bg-center relative" style={{ backgroundImage: `url(${bg})`, minHeight: '100vh' }}>
+    <div className="inset-0 bg-black opacity-50"></div>
+    <div className="welcome w-full relative z-10">
+        <div className="w-3/4 mx-auto pt-40">
+            <p className="text-center font-bold mb-5 text-7xl text-white">Get the <span className='text-yellow-600'>haristyle </span> <br></br> you deserve!</p>
+            <div className="book-container mt-16">
+            <p className="text-center text-3xl text-white">Book an appointment now!</p>
+            <div className="text-center mt-5">
+                <SubmitButton label="Book Now" labelcolor='black' bgcolor='rgb(202 138 4)' onSubmit={navigateToAppointments}/>
+           </div>
             </div>
-            <Slider {...settings} className="w-full relative">
-                <div className="w-full h-48 md:h-64 lg:h-80 xl:h-96 overflow-hidden relative">
-                    <img src={image1} alt="Image 1" className="w-full h-full object-cover" />
-                    <button onClick={navigateToAppointments} className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-blue-500 text-white px-8 py-4 rounded-lg opacity-90">Book Now</button>
-                </div>
-                <div className="w-full h-48 md:h-64 lg:h-80 xl:h-96 overflow-hidden relative">
-                    <img src={image2} alt="Image 2" className="w-full h-full object-cover" />
-                    <button onClick={navigateToAppointments} className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-blue-500 text-white px-8 py-4 rounded-lg opacity-90">Book Now</button>
-                </div>
-                <div className="w-full h-48 md:h-64 lg:h-80 xl:h-96 overflow-hidden relative">
-                    <img src={image3} alt="Image 3" className="w-full h-full object-cover" />
-                    <button onClick={navigateToAppointments} className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-blue-500 text-white px-8 py-4 rounded-lg opacity-90">Book Now</button>
-                </div>
-            </Slider>
-        </div>
+       </div>
+    </div>
+</div>
+
+
     );
 };
 

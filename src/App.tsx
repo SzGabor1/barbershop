@@ -10,8 +10,8 @@ const App:React.FC = () => {
   return (
     <>
     <Router>
-<Navbar/>
       <AllRoutes />
+<Navbar/>
     </Router>
     <Footer/>
     </>

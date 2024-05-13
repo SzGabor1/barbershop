@@ -1,15 +1,14 @@
-import React from "react";
-import { useState } from "react";
-import logo from "../assets/barberimage.jpg";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/bbshop logo.png";
 
-export const Navbar: React.FC = () =>{
-    const [isOpen, setIsOpen] = useState(false);
+export const Navbar: React.FC = () => {
+    const [isNavOpen, setIsNavOpen] = useState(false);
     const navigate = useNavigate();
     const token = localStorage.getItem('access_token');
 
     const toggleMenu = () => {
-        setIsOpen(prevState => !prevState);
+        setIsNavOpen(prevState => !prevState);
     };
 
     const handleLogout = () => {
@@ -19,51 +18,81 @@ export const Navbar: React.FC = () =>{
         navigate('/login');
     };
 
+    const navigateToHome = () => {
+        if (token) {
+            navigate('/home');
+        } else {
+            navigate('/');
+        }
+    }
+
     return (
-        <section>
-            <div className="navbar-container flex justify-between items-center bg-blue-300 h-20">
-                <header>
-                    <div className="logo flex items-center">
-                        <img className="w-10 ml-2 h-10 rounded-full" src={logo} alt="barber" />
-                        <p className="ml-5 text-2xl">Barbershop</p>
-                    </div>
-                </header>
-                <nav className="hidden md:block mr-10">
-                    <ul className="flex space-x-4">
-                    {token &&<li><a href="/home" className="text-xl relative after:bg-black after:absolute after:h-1 after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-500 cursor-pointer">Home</a></li>}
-                        {token &&<li><a href="/appointments" className="text-xl relative after:bg-black after:absolute after:h-1 after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-500 cursor-pointer">Appointments</a></li>}
-                        {token && <li><a href="#" onClick={handleLogout} className="text-xl relative after:bg-black after:absolute after:h-1 after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-500 cursor-pointer">Logout</a></li>}
-                        {!token && <li><a href="/login" className="text-xl relative after:bg-black after:absolute after:h-1 after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-500 cursor-pointer">Login</a></li>}
-                        {!token && <li><a href="/register" className="text-xl relative after:bg-black after:absolute after:h-1 after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-500 cursor-pointer">Register</a></li>}
-                   </ul>
-                </nav>
-                <div className="md:hidden">
-                    <svg
-                        className="w-6 h-6 cursor-pointer"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        onClick={toggleMenu}
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M4 6h16M4 12h16m-7 6h7"
-                        />
-                    </svg>
+        <section className="absolute w-full m-0 p-0 top-0 z-20">
+            <div className="navbar-container bg-black bg-opacity-40">
+                <div className="navbar-top justify-center text-center">
+                    <button onClick={navigateToHome}>
+                        <img className="logo h-16 text-center justify-center m-auto" src={logo} alt="barber" />
+                    </button>
                 </div>
             </div>
-
-            {/* Sidebar */}
-            <div className={`md:hidden ${isOpen ? 'block' : 'hidden'}`}>
-                <div className="bg-blue-300">
-                    <ul className="py-4">
-                        {token && <li><a href="/home" className="block py-2 px-4 text-white hover:bg-blue-400">Home</a></li>}
-                        {token && <li><a href="/appointments" className="block py-2 px-4 text-white hover:bg-blue-400">Appointments</a></li>}
-                        {token && <li><a href="/login" onClick={handleLogout} className="block py-2 px-4 text-white hover:bg-blue-400">Logout</a></li>}
-                        {!token && <li><a href="/login" className="text-xl relative after:bg-black after:absolute after:h-1 after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-500 cursor-pointer">Login</a></li>}
-                        {!token && <li><a href="/register" className="text-xl relative after:bg-black after:absolute after:h-1 after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-500 cursor-pointer">Register</a></li>} 
+            <div className="md:hidden">
+                <button className="navbar-toggle" onClick={toggleMenu}>
+                    <svg className="h-8 w-8 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        {isNavOpen ? (
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                        ) : (
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                        )}
+                    </svg>
+                </button>
+            </div>
+            {isNavOpen && (
+                <div className="md:hidden fixed inset-0 bg-black z-30">
+                    <div className="flex flex-col justify-start">
+                        <button className="absolute top-0 right-0 m-4" onClick={toggleMenu}>
+                            <svg className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                        <img className="logo h-16 text-center justify-center m-auto mt-8" src={logo} alt="barber" />
+                        <ul className="text-white text-center mt-4">
+                            <li className="py-3">
+                                <button onClick={navigateToHome}>Home</button>
+                            </li>
+                            <li className="py-3">
+                                <a href="#gallery">Gallery</a>
+                            </li>
+                            <li className="py-3">
+                                <a href="/appointments">Book</a>
+                            </li>
+                            <li className="py-3">
+                                <a href="#about">About Us</a>
+                            </li>
+                            {token ? (
+                                <li className="py-3">
+                                    <a onClick={handleLogout}>Logout</a>
+                                </li>
+                            ) : (
+                                <li className="py-3">
+                                    <a href="/login">Login</a>
+                                </li>
+                            )}
+                        </ul>
+                    </div>
+                </div>
+            )}
+            <div className="hidden md:block navbar-bottom bg-black bg-opacity-40 text-white">
+                <div className="navbar-items flex justify-center">
+                    <ul className="flex p-3">
+                        <li className="mx-3 permanent-marker-regular text-2xl"><button onClick={navigateToHome}>Home</button></li>
+                        <li className="mx-3 permanent-marker-regular text-2xl"><a href="#gallery">Gallery</a></li>
+                        <li className="mx-3 permanent-marker-regular text-2xl"><a href="/appointments">Book</a></li>
+                        <li className="mx-3 permanent-marker-regular text-2xl"><a href="#about">About Us</a></li>
+                        {token ? (
+                            <li className="mx-3 permanent-marker-regular text-2xl"><a onClick={handleLogout}>Logout</a></li>
+                        ) : (
+                            <li className="mx-3 permanent-marker-regular text-2xl"><a href="/login">Login</a></li>
+                        )}
                     </ul>
                 </div>
             </div>
