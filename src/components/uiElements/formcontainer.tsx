@@ -1,5 +1,6 @@
 import React from 'react';
 import SubmitButton from './submitButton';
+import {useLocation } from "react-router-dom";
 
 export interface FormProps {
     title: string;
@@ -35,14 +36,14 @@ const FormContainer: React.FC<FormProps> = ({ title, fields, onSubmit }) => {
 
     return (
         <div className="flex justify-center items-center">
-            <div className="FormContainer text-center border-gray-400 border-2 rounded-md p-3 align-middle">
-                <h1 className='underline mb-6 text-2xl'>{title}</h1>
+            <div className="FormContainer text-center bg-black bg opacity-90 border-black border-4 shadow-2xl rounded-xl p-3 align-middle">
+                <h1 className='text-white mb-6 text-3xl'>{title}</h1>
                 <form onSubmit={handleSubmit}>
                     {fields.map((fieldName) => (
                         <div key={fieldName} className="flex flex-col">
-                            <label htmlFor={fieldName}>{fieldName}</label>
+                            <label className="text-white text-xl" htmlFor={fieldName}>{fieldName}</label>
                             <input
-                                className="text-center my-2 border-2 border-gray-300 rounded-md p-1 m-1 w-64"
+                                className="text-center my-2 border-2 border-gray-300 rounded-md p-1 mx-1 mb-4 w-64"
                                 type={(fieldName === 'password' || fieldName === 'password2') ? 'password' : 'text'}
                                 name={fieldName}
                                 autoComplete='on'
@@ -52,7 +53,11 @@ const FormContainer: React.FC<FormProps> = ({ title, fields, onSubmit }) => {
                             />
                         </div>
                     ))}
-                    <SubmitButton onSubmit={() => { }} label="Submit" labelcolor="white" bgcolor="lightblue" />
+
+                    <div className="redirect">
+                    {useLocation().pathname === '/login' ? <p className='text-white mb-4'>Don't have an account? <a href="/register" className='text-yellow-500 underline'>Register</a></p> : <p className='text-white mb-4'>Already have an account? <a href="/login" className='text-yellow-500 underline'>Login</a></p>}
+                   </div>
+                   {useLocation().pathname === '/login' ? <SubmitButton onSubmit={() => { }} label="Login" labelcolor="white" bgcolor="rgb(202 138 4)" /> : <SubmitButton onSubmit={() => { }} label="Register" labelcolor="white" bgcolor="rgb(202 138 4)" />}
                 </form>
             </div>
         </div>

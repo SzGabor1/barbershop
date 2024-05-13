@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import logo from "../assets/bbshop logo.png";
 
 export const Navbar: React.FC = () => {
     const [isNavOpen, setIsNavOpen] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
     const token = localStorage.getItem('access_token');
 
     const toggleMenu = () => {
@@ -19,20 +20,16 @@ export const Navbar: React.FC = () => {
         toggleMenu();
     };
 
-    const navigateToHome = () => {
-        if (token) {
-            navigate('/home');
-        } else {
-            navigate('/');
-        }
+    const navigateTo = (path: string) => {
+        navigate(path);
         toggleMenu();
-    }
+    };
 
     return (
         <section className="absolute w-full m-0 p-0 top-0 z-20">
             <div className="navbar-container bg-black bg-opacity-40">
                 <div className="navbar-top justify-center text-center">
-                    <button onClick={navigateToHome}>
+                    <button onClick={() => navigateTo(token ? '/home' : '/')}>
                         <img className="logo h-16 text-center justify-center m-auto" src={logo} alt="barber" />
                     </button>
                 </div>
@@ -58,16 +55,16 @@ export const Navbar: React.FC = () => {
                         </button>
                         <img className="logo h-16 text-center justify-center m-auto mt-8" src={logo} alt="barber" />
                         <ul className="text-white text-center mt-4">
-                            <li className="py-3">
-                                <button onClick={navigateToHome}>Home</button>
+                            <li className={location.pathname === '/home' || location.pathname === '/' ? 'py-3 active' : 'py-3'}>
+                                <button onClick={() => navigateTo(token ? '/home' : '/')}>Home</button>
                             </li>
-                            <li className="py-3">
+                            <li className={location.pathname === '/gallery' ? 'py-3 active' : 'py-3'}>
                                 <a href="#gallery">Gallery</a>
                             </li>
-                            <li className="py-3">
+                            <li className={location.pathname === '/appointments' ? 'py-3 active' : 'py-3'}>
                                 <a href="/appointments">Book</a>
                             </li>
-                            <li className="py-3">
+                            <li className={location.pathname === '/about' ? 'py-3 active' : 'py-3'}>
                                 <a href="#about">About Us</a>
                             </li>
                             {token ? (
@@ -83,21 +80,32 @@ export const Navbar: React.FC = () => {
                     </div>
                 </div>
             )}
-            <div className="hidden md:block navbar-bottom bg-black bg-opacity-40 text-white">
-                <div className="navbar-items flex justify-center">
-                    <ul className="flex p-3">
-                        <li className="mx-3 permanent-marker-regular text-2xl"><button onClick={navigateToHome}>Home</button></li>
-                        <li className="mx-3 permanent-marker-regular text-2xl"><a href="#gallery">Gallery</a></li>
-                        <li className="mx-3 permanent-marker-regular text-2xl"><a href="/appointments">Book</a></li>
-                        <li className="mx-3 permanent-marker-regular text-2xl"><a href="#about">About Us</a></li>
-                        {token ? (
-                            <li className="mx-3 permanent-marker-regular text-2xl"><a onClick={handleLogout}>Logout</a></li>
-                        ) : (
-                            <li className="mx-3 permanent-marker-regular text-2xl"><a href="/login">Login</a></li>
-                        )}
-                    </ul>
-                </div>
-            </div>
+<div className="hidden md:block navbar-bottom bg-black bg-opacity-40 text-white">
+    <div className="navbar-items flex justify-center">
+        <ul className="flex p-3">
+            <li className={`mx-3 permanent-marker-regular text-2xl transition duration-300 ease-in-out transform hover:scale-110 ${location.pathname === '/home' || location.pathname === '/' ? 'text-yellow-600' : ''}`}>
+                <button onClick={() => navigateTo(token ? '/home' : '/')}>Home</button>
+            </li>
+            <li className={`mx-3 permanent-marker-regular text-2xl transition duration-300 ease-in-out transform hover:scale-110 ${location.pathname === '/gallery' ? 'text-yellow-600' : ''}`}>
+                <a href="#gallery">Gallery</a>
+            </li>
+            <li className={`mx-3 permanent-marker-regular text-2xl transition duration-300 ease-in-out transform hover:scale-110 ${location.pathname === '/appointments' ? 'text-yellow-600' : ''}`}>
+                <a href="/appointments">Book</a>
+            </li>
+            <li className={`mx-3 permanent-marker-regular text-2xl transition duration-300 ease-in-out transform hover:scale-110 ${location.pathname === '/about' ? 'text-yellow-600' : ''}`}>
+                <a href="#about">About Us</a>
+            </li>
+            {token ? (
+                <li className="mx-3 permanent-marker-regular text-2xl"><a onClick={handleLogout}>Logout</a></li>
+            ) : (
+                <li className={`mx-3 permanent-marker-regular text-2xl transition duration-300 ease-in-out transform hover:scale-110 ${location.pathname === '/login' ? 'text-yellow-600' : ''}`}>
+                    <a href="/login">Login</a>
+                </li>
+            )}
+        </ul>
+    </div>
+</div>
+
         </section>
     );
 }
