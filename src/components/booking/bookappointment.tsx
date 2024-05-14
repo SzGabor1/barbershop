@@ -1,6 +1,6 @@
 // BookAppointment.tsx
 import React, { useState } from 'react';
-import SubmitButton from './uiElements/submitButton';
+import SubmitButton from '../uiElements/submitButton';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

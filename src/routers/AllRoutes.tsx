@@ -2,11 +2,11 @@ import React from 'react';
 
 import {Routes, Route} from 'react-router-dom';
 
-import Home from '../components/home';
-import Login from '../components/login';
-import Appointment from '../components/appointment';
-import Register from '../components/register';
-import Main from '../components/mainpage';
+import Home from '../components/home/home';
+import Login from '../components/login/login';
+import Appointment from '../components/booking/appointment';
+import Register from '../components/register/register';
+import Main from '../components/home/mainpage';
 
 export const AllRoutes: React.FC = () =>{
 

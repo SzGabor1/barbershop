@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import logo from "../assets/bbshop logo.png";
+import logo from "../../assets/bbshop logo.png";
 
 export const Navbar: React.FC = () => {
     const [isNavOpen, setIsNavOpen] = useState(false);

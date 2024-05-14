@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import WeekViewDatePicker from './uiElements/weekViewDatepicker';
+import WeekViewDatePicker from '../uiElements/weekViewDatepicker';
 import SelectEmployee from './selectemployee';
 import SelectService from './selectservice';
-import Modal from './uiElements/modal';
+import Modal from '../uiElements/modal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import BookAppointment from './bookappointment';
 
-import bgImage from '../assets/bg3.jpg';
+import bgImage from '../../assets/bg3.jpg';
 
 interface Employee {
   id: number;
@@ -197,7 +197,7 @@ return (
                       <button
                         key={timeslot.pk}
                         onClick={() => handleBookAppointment(timeslot)}
-                        className={`border-4 ${timeslot.pk === selectedService?.pk ? 'border-yellow-600' : 'border-transparent'} bg-yellow-600 hover:border-yellow-500 text-white font-bold py-2 px-4 mb-2 rounded`}
+                        className={`border-4 ml-2 ${timeslot.pk === selectedService?.pk ? 'border-yellow-600' : 'border-transparent'} bg-yellow-600 hover:border-yellow-500 text-white font-bold py-2 px-4 mb-2 rounded`}
                       >
                         {formatTime(timeslot.start_date)}
                       </button>
@@ -213,7 +213,7 @@ return (
                       <button
                         key={timeslot.pk}
                         onClick={() => handleBookAppointment(timeslot)}
-                        className={`border-4 ${timeslot.pk === selectedService?.pk ? 'border-yellow-600' : 'border-transparent'} bg-yellow-600 hover:border-yellow-500 text-white font-bold py-2 px-4 mb-2 rounded`}
+                        className={`border-4 ml-2 ${timeslot.pk === selectedService?.pk ? 'border-yellow-600' : 'border-transparent'} bg-yellow-600 hover:border-yellow-500 text-white font-bold py-2 px-4 mb-2 rounded`}
                       >
                         {formatTime(timeslot.start_date)}
                       </button>

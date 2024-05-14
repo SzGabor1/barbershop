@@ -3,8 +3,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import FormContainer, { FormData } from './uiElements/formcontainer';
-import bg2 from '../assets/bg2.jpg'; 
+import FormContainer, { FormData } from '../uiElements/formcontainer';
+import bg2 from '../../assets/bg2.jpg'; 
 
 const Register: React.FC = () => {
     const backendURL: string = import.meta.env.VITE_BACKENDURL;
@@ -46,21 +46,22 @@ const Register: React.FC = () => {
     };
 
     return (
-        <div className="home-container flex-col bg-cover bg-center relative" style={{ backgroundImage: `url(${bg2})`, minHeight: '100vh' }}>
-            <div className="inset-0 bg-black opacity-50"></div>
-            <div className="welcome w-full relative z-10">
-                <div className="w-3/4 mx-auto pt-40">
-                    <div className="register-form mt-16 pb-16">
-                        <FormContainer
-                            title="Register"
-                            fields={['username', 'password', 'password2', 'email', 'first_name', 'last_name']}
-                            onSubmit={handleRegister}
-                        />
-                    </div>
-                </div>
+<div className="home-container relative" style={{ backgroundImage: `url(${bg2})`, minHeight: '100vh', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+    <div className="absolute inset-0 bg-black opacity-50"></div>
+    <div className="welcome w-full relative z-10">
+        <div className="w-3/4 mx-auto pt-40">
+            <div className="register-form mt-16 pb-16">
+                <FormContainer
+                    title="Register"
+                    fields={['username', 'password', 'password2', 'email', 'first_name', 'last_name']}
+                    onSubmit={handleRegister}
+                />
             </div>
-            <ToastContainer />
         </div>
+    </div>
+    <ToastContainer />
+</div>
+
     );
 };
 

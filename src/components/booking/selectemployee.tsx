@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import barberimage from '../assets/barberimage.jpg';
+import barberimage from '../../assets/barberimage.jpg';
 
-import '../styles/selectemployee.css';
+import '../../styles/selectemployee.css';
 
 interface Employee {
     id: number;

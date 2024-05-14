@@ -3,8 +3,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import FormContainer from './uiElements/formcontainer';
-import bg2 from '../assets/bg2.jpg'; 
+import FormContainer from '../uiElements/formcontainer';
+import bg2 from '../../assets/bg2.jpg'
 
 const Login: React.FC = () => {
     const backendURL: string = import.meta.env.VITE_BACKENDURL;

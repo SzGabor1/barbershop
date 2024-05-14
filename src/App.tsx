@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router} from "react-router-dom";
 
-import {Navbar} from './components/navbar';
+import {Navbar} from './components/navbar/navbar';
 import {AllRoutes} from './routers/AllRoutes';
-import {Footer} from './components/footer';
+import {Footer} from './components/footer/footer';
 
 const App:React.FC = () => {
 
