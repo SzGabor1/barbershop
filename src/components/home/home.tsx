@@ -7,7 +7,7 @@ import SubmitButton from '../uiElements/submitButton';
 
 import bg from '../../assets/bg.jpg';
 
-const Main: React.FC = () => {
+const Home: React.FC = () => {
     const token = localStorage.getItem('access_token');
     const navigate = useNavigate();
 
@@ -43,4 +43,4 @@ const Main: React.FC = () => {
     );
 };
 
-export default Main;
+export default Home;
