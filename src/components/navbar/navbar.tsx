@@ -59,7 +59,7 @@ export const Navbar: React.FC = () => {
                                 <button onClick={() => navigateTo(token ? '/home' : '/')}>Home</button>
                             </li>
                             <li className={location.pathname === '/gallery' ? 'py-3 active' : 'py-3'}>
-                                <a href="#gallery">Gallery</a>
+                                <a href="/gallery">Gallery</a>
                             </li>
                             <li className={location.pathname === '/appointments' ? 'py-3 active' : 'py-3'}>
                                 <a href="/appointments">Book</a>
@@ -87,7 +87,7 @@ export const Navbar: React.FC = () => {
                 <button onClick={() => navigateTo(token ? '/home' : '/')}>Home</button>
             </li>
             <li className={`mx-3 permanent-marker-regular text-2xl transition duration-300 ease-in-out transform hover:scale-110 ${location.pathname === '/gallery' ? 'text-yellow-600' : ''}`}>
-                <a href="#gallery">Gallery</a>
+                <a href="/gallery">Gallery</a>
             </li>
             <li className={`mx-3 permanent-marker-regular text-2xl transition duration-300 ease-in-out transform hover:scale-110 ${location.pathname === '/appointments' ? 'text-yellow-600' : ''}`}>
                 <a href="/appointments">Book</a>

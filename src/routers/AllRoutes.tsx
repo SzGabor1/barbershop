@@ -7,7 +7,7 @@ import Login from '../components/login/login';
 import Appointment from '../components/booking/appointment';
 import Register from '../components/register/register';
 import Main from '../components/home/mainpage';
-
+import Gallery from '../components/gallery/gallery';
 export const AllRoutes: React.FC = () =>{
 
   return (
@@ -17,6 +17,7 @@ export const AllRoutes: React.FC = () =>{
       <Route path="login" element={<Login />} />
       <Route path="appointments" element={<Appointment />} />
       <Route path="register" element={<Register />} />
+      <Route path="gallery" element={<Gallery />} />
     </Routes>
   )
 }
